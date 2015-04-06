@@ -1,8 +1,25 @@
 
-Workflow based on Webpack
+Workflow based on Webpack & CirruScript
 ----
 
-Scaffold for my small web applications.
+Scaffold for personal projects.
+
+### Usage
+
+* Development
+
+```text
+npm i
+gulp html
+webpack-dev-server --hot
+```
+
+* Production
+
+```text
+gulp buld
+gulp rsync
+```
 
 ### License
 

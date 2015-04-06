@@ -14,9 +14,8 @@ module.exports = {
     filename: '[name].js',
     publicPath: 'http://localhost:8080/build/'
   },
-  devtool: 'eval-source-map',
   resolve: {
-    extensions: ['', '.js', '.cirru']
+    extensions: ['.js', '.cirru', '']
   },
   module: {
     loaders: [
@@ -24,12 +23,5 @@ module.exports = {
       {test: /\.cirru$/, loader: 'cirru-script'}
     ]
   },
-  plugins: [
-    function() {
-       this.plugin('done', function(stats) {
-        content = JSON.stringify(stats.toJson().assetsByChunkName, null, 2)
-        return fs.writeFileSync('assets.json', content)
-      })
-    }
-  ]
+  plugins: []
 }
