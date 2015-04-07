@@ -30,9 +30,9 @@ gulp.task :script $ \ ()
     script $ require :gulp-cirru-script
 
   ... gulp
-    :src :src/*.cirru
-    :pipe $ script
-    :pipe $ gulp.dest :lib/
+    src :src/*.cirru
+    pipe $ script
+    pipe $ gulp.dest :lib/
 
 gulp.task :html $ \ (cb)
   var
