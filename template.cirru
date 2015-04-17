@@ -1,15 +1,7 @@
 
 var
   stir $ require :stir-template
-  html stir.html
-  head stir.head
-  body stir.body
-  div stir.div
-  link $ stir.createFactory :link
-  script $ stir.createFactory :script
-  meta $ stir.createFactory :meta
-  style $ stir.createFactory :style
-  title $ stir.createFactory :title
+  (object~ html head title meta script body div) stir
 
 = module.exports $ \ (data)
   return $ stir.render

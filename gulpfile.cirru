@@ -51,7 +51,7 @@ gulp.task :del $ \ (cb)
 
 gulp.task :webpack $ \ (cb)
   var
-    command $ cond env.dev :webpack ":webpack --config webpack.min.js"
+    command $ cond env.dev :webpack ":webpack --config webpack.min.cirru"
   exec command $ \ (err stdout stderr)
     console.log stdout
     console.log stderr
