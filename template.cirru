@@ -1,7 +1,7 @@
 
 var
   stir $ require :stir-template
-  (object~ html head title meta script body div) stir
+  (object~ html head title meta link script body div) stir
 
 = module.exports $ \ (data)
   return $ stir.render
@@ -10,6 +10,8 @@ var
       head null
         title null :Workflow
         meta $ object (:charset :utf-8)
-        script $ object (:src data.main)
+        link $ object (:rel :icon)
+          :href :http://logo.cirru.org/cirru-32x32.png
+        script $ object (:src data.vendor) (:defer true)
+        script $ object (:src data.main) (:defer true)
       body null
-        div null :empty

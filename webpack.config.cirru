@@ -1,13 +1,14 @@
 
 var
   fs $ require :fs
+  webpack $ require :webpack
 
 = module.exports $ object
   :entry $ object
-    :main $ array
+    :vendor $ array
       , :webpack-dev-server/client?http://0.0.0.0:8080
       , :webpack/hot/dev-server
-      , :./src/main
+    :main $ array :./src/main
 
   :output $ object
     :path :build/
@@ -20,3 +21,6 @@ var
   :module $ object
     :loaders $ array
       object (:test /\.cirru$) (:loader :cirru-script) (:ignore /node_modules)
+
+  :plugins $ array
+    new webpack.optimize.CommonsChunkPlugin :vendor :vendor.js
