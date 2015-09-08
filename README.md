@@ -15,9 +15,10 @@ cp $wf/package.json .;
 cp $wf/webpack.* .;
 cp $wf/template.cirru .;
 cp $wf/.gitignore .;
+cp $wf/.npmignore .;
 cp $wf/README.md .;
-mkdir src/;
-touch src/main.cirru;
+cp -r $wf/style .;
+cp -r src .;
 git init;
 "
 ```
