@@ -5,28 +5,28 @@ var
   fs $ require :fs
   ExtractTextPlugin $ require :extract-text-webpack-plugin
 
-= module.exports $ object
-  :entry $ object
-    :main $ array :./src/main
-    :vendor $ array
+= module.exports $ {}
+  :entry $ {}
+    :main $ [] :./src/main
+    :vendor $ []
 
-  :output $ object
+  :output $ {}
     :path :build/
     :filename :[name].[chunkhash:8].js
-    :publicPath :./build/
 
   :resolve config.resolve
   :module $ {}
     :loaders $ []
       {} (:test /\.cirru$) (:loader :cirru-script) (:ignore /node_modules)
       {} (:test "/\.(png|jpg)$") (:loader :url-loader)
+        :query $ {} (:limit 100)
       {} (:test /\.css$) $ :loader
         ExtractTextPlugin.extract :style-loader :css!autoprefixer
 
-  :plugins $ array
+  :plugins $ []
     new webpack.optimize.CommonsChunkPlugin :vendor :vendor.[chunkhash:8].js
     new ExtractTextPlugin :style.[chunkhash:8].css
-    new webpack.optimize.UglifyJsPlugin $ object (:sourceMap false)
+    new webpack.optimize.UglifyJsPlugin $ {} (:sourceMap false)
     \ ()
       this.plugin :done $ \ (stats)
         var
