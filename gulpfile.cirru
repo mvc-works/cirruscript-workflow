@@ -5,9 +5,9 @@ var
   exec $ . (require :child_process) :exec
   env $ object
     :dev true
-    :main :http://192.168.0.129:8080/build/main.js
-    :vendor :http://192.168.0.129:8080/build/vendor.js
-    :style :http://192.168.0.129:8080/build/style.css
+    :main :http://192.168.0.129:8080/main.js
+    :vendor :http://192.168.0.129:8080/vendor.js
+    :style :http://192.168.0.129:8080/style.css
 
 gulp.task :rsync $ \ (cb)
   var
@@ -15,7 +15,7 @@ gulp.task :rsync $ \ (cb)
   wrapper.rsync
     object
       :ssh true
-      :src $ array :index.html :build
+      :src $ array :build/*
       :recursive true
       :args $ array :--verbose
       :dest :tiye:~/repo/workflow/
@@ -43,10 +43,10 @@ gulp.task :html $ \ (cb)
     assets
   if (not env.dev) $ do
     = assets $ require :./build/assets.json
-    = env.main $ + :./build/ $ . assets.main 0
-    = env.style $ + :./build/ $ . assets.main 1
-    = env.vendor $ + :./build/ assets.vendor
-  fs.writeFile :index.html (html env) cb
+    = env.main $ . assets.main 0
+    = env.style $ . assets.main 1
+    = env.vendor assets.vendor
+  fs.writeFile :build/index.html (html env) cb
 
 gulp.task :del $ \ (cb)
   var

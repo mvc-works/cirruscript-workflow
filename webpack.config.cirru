@@ -13,7 +13,7 @@ var
   :output $ {}
     :path :build/
     :filename :[name].js
-    :publicPath :http://192.168.0.129:8080/build/
+    :publicPath :http://192.168.0.129:8080/
 
   :resolve $ {}
     :extensions $ [] :.js :.cirru :
