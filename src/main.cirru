@@ -1,4 +1,4 @@
 
-require :../style/main.css
+require :./main.css
 
 console.log :loaded

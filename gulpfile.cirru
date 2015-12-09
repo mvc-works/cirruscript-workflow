@@ -1,19 +1,17 @@
 
 var
+  fs $ require :fs
   gulp $ require :gulp
+  gutil $ require :gulp-util
   sequence $ require :run-sequence
-  exec $ . (require :child_process) :exec
-  env $ object
-    :dev true
-    :main :http://192.168.0.129:8080/main.js
-    :vendor :http://192.168.0.129:8080/vendor.js
-    :style :http://192.168.0.129:8080/style.css
+  settings $ require :./tasks/settings
+  env :dev
 
 gulp.task :rsync $ \ (cb)
   var
     wrapper $ require :rsyncwrapper
   wrapper.rsync
-    object
+    {}
       :ssh true
       :src $ array :build/*
       :recursive true
@@ -38,29 +36,64 @@ gulp.task :script $ \ ()
 
 gulp.task :html $ \ (cb)
   var
-    html $ require :./template
+    html $ require :./tasks/template
     fs $ require :fs
-    assets
-  if (not env.dev) $ do
-    = assets $ require :./build/assets.json
-    = env.main $ . assets.main 0
-    = env.style $ . assets.main 1
-    = env.vendor assets.vendor
   fs.writeFile :build/index.html (html env) cb
 
 gulp.task :del $ \ (cb)
   var
     del $ require :del
-  del (array :build) cb
+  del (array :build/**/*) cb
 
-gulp.task :webpack $ \ (cb)
+gulp.task :webpack-dev $ \ (cb)
   var
-    command $ cond env.dev :webpack ":webpack --config webpack.min.cirru --progress"
-  exec command $ \ (err stdout stderr)
-    console.log stdout
-    console.log stderr
-    cb err
+    webpack $ require :webpack
+    webpackDev $ require :./tasks/webpack-dev
+    WebpackDevServer $ require :webpack-dev-server
+    config $ settings.get :dev
+  var webpackServer $ {}
+    :publicPath :/
+    :hot true
+    :stats $ {}
+      :colors true
+  var info $ {}
+    :__dirname __dirname
+    :env env
+
+  var compiler $ webpack (webpackDev info)
+  var server $ new WebpackDevServer compiler webpackServer
+
+  server.listen config.port :localhost $ \ (err)
+    if (? err) $ do
+      throw $  new gutil.PluginError :webpack-dev-server err
+    gutil.log ":[webpack-dev-server] is running..."
+    cb
+
+gulp.task :webpack-build $ \ (cb)
+  var
+    webpack $ require :webpack
+    webpackBuild $ require :./tasks/webpack-build
+    config $ settings.get env
+  var info $ {}
+    :__dirname __dirname
+    :isMinified config.isMinified
+    :useCDN config.useCDN
+    :cdn config.cdn
+    :env config.env
+  webpack (webpackBuild info) $ \ (err stats)
+    if err $ do
+      throw $ new gutil.PluginError :webpack  err
+    gutil.log :[webpack] (stats.toString)
+    var jsonData $ stats.toJson
+    var fileContent $ JSON.stringify jsonData.assetsByChunkName
+    fs.writeFileSync :tasks/assets.json fileContent
+    cb
+
+-- ":aliases"
+
+gulp.task :dev $ \ (cb)
+  sequence :html :webpack-dev cb
 
 gulp.task :build $ \ (cb)
-  = env.dev false
-  sequence :del :webpack :html cb
+  = env :build
+  sequence :del :webpack-build :html cb

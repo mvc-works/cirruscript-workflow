@@ -12,13 +12,11 @@ export wf=/Users/chen/repo/mvc-works/webpack-workflow/
 alias workflow="
 cp $wf/gulpfile.* .;
 cp $wf/package.json .;
-cp $wf/webpack.* .;
-cp $wf/template.cirru .;
+cp $wf/README.md .;
 cp $wf/.gitignore .;
 cp $wf/.npmignore .;
-cp $wf/README.md .;
-cp -r $wf/style .;
-cp -r src .;
+cp -r $wf/src .;
+cp -r $wf/tasks .;
 git init;
 "
 ```
@@ -29,14 +27,13 @@ git init;
 
 ```text
 npm i
-gulp html
-webpack-dev-server --hot
+gulp dev
 ```
 
 * Production
 
 ```text
-gulp buld
+gulp build
 gulp rsync
 ```
 
