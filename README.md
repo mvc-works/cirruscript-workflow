@@ -25,14 +25,23 @@ git init;
 
 * Development
 
-```text
+```bash
 npm i
 gulp dev
 ```
 
+For a server, also [try this][server]:
+
+[server]: https://github.com/jlongster/backend-with-webpack/blob/master/gulpfile.js
+
+```bash
+gulp webpack-server
+node build/bundle.js
+```
+
 * Production
 
-```text
+```bash
 gulp build
 gulp rsync
 ```

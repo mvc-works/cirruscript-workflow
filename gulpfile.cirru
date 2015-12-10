@@ -89,6 +89,23 @@ gulp.task :webpack-build $ \ (cb)
     fs.writeFileSync :tasks/assets.json fileContent
     cb
 
+gulp.task :webpack-server $ \ (cb)
+  var
+    webpack $ require :webpack
+    serverConfig $ require :./tasks/webpack-server
+
+  ... (webpack serverConfig) $ run $ \ (err stats)
+    if err
+      do $ console.log err
+      do $ console.log (stats.toString)
+    cb
+
+  ... (webpack serverConfig) $ watch 100 $ \ (err stats)
+    if err
+      do $ console.log err
+      do $ console.log (stats.toString)
+    , null
+
 -- ":aliases"
 
 gulp.task :dev $ \ (cb)
