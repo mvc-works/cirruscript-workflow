@@ -46,6 +46,10 @@ gulp build
 gulp rsync
 ```
 
+### Project Template
+
+https://github.com/mvc-works/webpack-workflow
+
 ### License
 
 MIT

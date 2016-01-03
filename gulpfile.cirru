@@ -13,9 +13,9 @@ gulp.task :rsync $ \ (cb)
   wrapper.rsync
     {}
       :ssh true
-      :src $ array :build/*
+      :src $ [] :build/*
       :recursive true
-      :args $ array :--verbose
+      :args $ [] :--verbose
       :dest :tiye:~/repo/workflow/
       :deleteAll true
     \ (error stdout stderr cmd)
@@ -43,7 +43,7 @@ gulp.task :html $ \ (cb)
 gulp.task :del $ \ (cb)
   var
     del $ require :del
-  del (array :build/**/*) cb
+  del ([] :build/**/*) cb
 
 gulp.task :webpack-dev $ \ (cb)
   var

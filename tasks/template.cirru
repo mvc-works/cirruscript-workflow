@@ -16,12 +16,13 @@ var style $ stir.createFactory :style
     html null
       head null
         title null :Workflow
-        meta $ {} (:charset :utf-8)
-        link $ {} (:rel :icon)
-          :href :http://logo.cirru.org/cirru-32x32.png
+        meta $ {} :charset :utf-8
+        link $ {} :rel :icon
+          , :href :http://logo.cirru.org/cirru-32x32.png
         cond (? assets.style)
-          link $ {} (:rel :stylesheet) (:href assets.style)
-        script $ {} (:src assets.vendor) (:defer true)
-        script $ {} (:src assets.main) (:defer true)
+          link $ {} :rel :stylesheet :href assets.style
+        script $ {} :src assets.vendor :defer true
+        script $ {} :src assets.main :defer true
         style null ":body * {box-sizing: border-box;}"
-      body ({} (:style ":margin: 0;"))
+      body ({} :style ":margin: 0;")
+        div ({} :id :app)
