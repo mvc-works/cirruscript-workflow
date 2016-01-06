@@ -63,7 +63,7 @@ gulp.task :webpack-dev $ \ (cb)
   var compiler $ webpack (webpackDev info)
   var server $ new WebpackDevServer compiler webpackServer
 
-  server.listen config.port :localhost $ \ (err)
+  server.listen config.port :0.0.0.0 $ \ (err)
     if (? err) $ do
       throw $  new gutil.PluginError :webpack-dev-server err
     gutil.log ":[webpack-dev-server] is running..."

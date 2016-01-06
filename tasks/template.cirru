@@ -3,9 +3,7 @@ var
   stir $ require :stir-template
   settings $ require :./settings
   resource $ require :./resource
-  ({}~ html head title meta link script body div) stir
-
-var style $ stir.createFactory :style
+  ({}~ html head title meta link script body div style) stir
 
 = module.exports $ \ (env)
   var config $ settings.get env
