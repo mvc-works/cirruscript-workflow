@@ -7,24 +7,6 @@ var
   settings $ require :./tasks/settings
   env :dev
 
-gulp.task :rsync $ \ (cb)
-  var
-    wrapper $ require :rsyncwrapper
-  wrapper.rsync
-    {}
-      :ssh true
-      :src $ [] :build/*
-      :recursive true
-      :args $ [] :--verbose
-      :dest :tiye:~/repo/workflow/
-      :deleteAll true
-    \ (error stdout stderr cmd)
-      if (? error)
-        do $ throw error
-      console.error stderr
-      console.log cmd
-      cb
-
 gulp.task :script $ \ ()
   var
     script $ require :gulp-cirru-script
@@ -88,23 +70,6 @@ gulp.task :webpack-build $ \ (cb)
     var fileContent $ JSON.stringify jsonData.assetsByChunkName
     fs.writeFileSync :tasks/assets.json fileContent
     cb
-
-gulp.task :webpack-server $ \ (cb)
-  var
-    webpack $ require :webpack
-    serverConfig $ require :./tasks/webpack-server
-
-  ... (webpack serverConfig) $ run $ \ (err stats)
-    if err
-      do $ console.log err
-      do $ console.log (stats.toString)
-    cb
-
-  ... (webpack serverConfig) $ watch 100 $ \ (err stats)
-    if err
-      do $ console.log err
-      do $ console.log (stats.toString)
-    , null
 
 -- ":aliases"
 

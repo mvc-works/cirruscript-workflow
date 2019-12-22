@@ -4,10 +4,9 @@ var
   path $ require :path
   webpack $ require :webpack
   settings $ require :./settings
+  config $ settings.get :dev
 
-= module.exports $ \ (info)
-  var config $ settings.get :dev
-
+= module.exports
   {}
     :entry $ {}
       :vendor $ []
@@ -16,21 +15,25 @@ var
       :main $ [] :./src/main
 
     :output $ {}
-      :path $ path.join info.__dirname :build/
+      :path $ path.join __dirname :../ :dist/
       :filename :[name].js
       :publicPath $ + config.host :: config.port :/
 
     :resolve $ {}
-      :extensions $ [] :.js :.cirru :
+      :extensions $ [] :.js :.cirru
 
     :module $ {}
-      :loaders $ []
-        {} (:test /\.cirru$) (:loader :cirru-script) (:ignore /node_modules)
-        {} (:test "/\.(png|jpg|gif)$") (:loader :url-loader)
+      :rules $ []
+        {} (:test /\.cirru$) (:exclude /node_modules)
+          :use :cirru-script-loader
+        {} (:test "/\.(png|jpg|gif)$")
+          :loader :url-loader
           :query $ {} (:limit 100)
-        {} (:test /\.css$) $ :loader :style!css!autoprefixer
-        {} (:test /\.json$) $ :loader :json
+        {} (:test /\.css$) $ :use
+          []
+            {} (:loader :style-loader)
+            {} (:loader :css-loader)
+        {} (:test /\.json$)
+          :use $ [] $ {} (:loader :json-loader)
 
     :plugins $ []
-      new webpack.optimize.CommonsChunkPlugin :vendor :vendor.js
-      new webpack.HotModuleReplacementPlugin
