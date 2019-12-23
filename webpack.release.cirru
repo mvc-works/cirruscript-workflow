@@ -2,7 +2,8 @@
 var
   path $ require :path
   webpack $ require :webpack
-  webpackDev $ require :./webpack-dev
+  AssetsPlugin $ require :assets-webpack-plugin
+  webpackDev $ require :./webpack.dev
 
 = module.exports
   {}
@@ -23,3 +24,5 @@ var
         {} (:test /\.css$) $ :loaders $ [] :style-loader :css-loader
 
     :plugins $ []
+      new AssetsPlugin $ {}
+        :filename :dist/assets.json

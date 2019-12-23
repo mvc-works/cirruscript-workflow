@@ -3,7 +3,7 @@ var
   fs $ require :fs
   path $ require :path
   webpack $ require :webpack
-  settings $ require :./settings
+  settings $ require :./tasks/settings
   config $ settings.get :dev
 
 = module.exports
@@ -35,5 +35,22 @@ var
             {} (:loader :css-loader)
         {} (:test /\.json$)
           :use $ [] $ {} (:loader :json-loader)
+
+    :devServer $ {}
+      :publicPath :/
+      :hot true
+      :compress true
+      :clientLogLevel :info
+      :disableHostCheck true
+      :host :0.0.0.0
+      :stats $ {}
+        :all false
+        :colors true
+        :errors true
+        :errorDetails true
+        :performance true
+        :reasons true
+        :timings true
+        :warnings true
 
     :plugins $ []

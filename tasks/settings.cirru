@@ -5,7 +5,7 @@
       :env :dev
       :host :http://localhost
       :port 8080
-    :build $ {}
-      :env :build
+    :release $ {}
+      :env :release
       :host :http://localhost
       :port 8080
