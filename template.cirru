@@ -9,6 +9,7 @@ var
   call $ \ (f) (f)
 
   getConfig $ \ (env)
+    var config $ settings.get env
     case env
       :dev $ {}
         :main $ + config.host :: config.port :/main.js
@@ -19,11 +20,10 @@ var
           :main assets.main.js
           :style null
 
-console.log ":Running mode" process.env.env
+console.log ":Running mode" (or process.env.env :dev)
 
 var getHtml $ \ (env)
   var
-    config $ settings.get env
     assets $ getConfig env
 
   stir.render
@@ -46,4 +46,4 @@ if (is process.env.env :release)
   do
     = env :release
 
-fs.writeFileSync :index.html (getHtml env)
+fs.writeFileSync (cond (is process.env.env :release) :dist/index.html :index.html) (getHtml env)
