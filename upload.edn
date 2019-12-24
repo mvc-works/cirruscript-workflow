@@ -1,0 +1,6 @@
+
+{:host "tiye.me"
+ :uploads [{:from "dist/*"
+            :to "cdn/cirruscript-workflow/"}
+           {:from "dist/{index.html,manifest.json}"
+            :to "repo/mvc-works/cirruscript-workflow/"}]}
