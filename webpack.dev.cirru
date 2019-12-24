@@ -3,21 +3,18 @@ var
   fs $ require :fs
   path $ require :path
   webpack $ require :webpack
-  settings $ require :./tasks/settings
-  config $ settings.get :dev
 
 = module.exports
   {}
+    :mode :development
     :entry $ {}
-      :vendor $ []
-        + :webpack-dev-server/client? config.host :: config.port
-        , :webpack/hot/dev-server
-      :main $ [] :./src/main
+      :main $ [] :webpack-hud :./src/main
 
     :output $ {}
-      :path $ path.join __dirname :../ :dist/
+      :path $ path.join __dirname :dist/
       :filename :[name].js
-      :publicPath $ + config.host :: config.port :/
+
+    :devtool :cheap-source-map
 
     :resolve $ {}
       :extensions $ [] :.js :.cirru
@@ -54,3 +51,4 @@ var
         :warnings true
 
     :plugins $ []
+      new webpack.NamedModulesPlugin

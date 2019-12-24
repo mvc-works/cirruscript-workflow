@@ -10,7 +10,6 @@ Scaffold for personal projects.
 
 ```bash
 yarn
-yarn html
 yarn watch
 ```
 
@@ -18,7 +17,6 @@ yarn watch
 
 ```bash
 yarn release
-yarn release-html
 tiye-up
 ```
 
