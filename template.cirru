@@ -2,29 +2,25 @@
 var
   stir $ require :stir-template
   fs $ require :fs
-  settings $ require :./tasks/settings
+
   ({}~ html head title meta link script body div style) stir
 
   logoUrl :http://logo.cirru.org/cirru-32x32.png
-  call $ \ (f) (f)
-
-  getConfig $ \ (env)
-    var config $ settings.get env
-    case env
-      :dev $ {}
-        :main $ + config.host :: config.port :/main.js
-        :style null
-      :release $ call $ \ ()
-        var assets $ require :./dist/assets
-        {}
-          :main assets.main.js
-          :style null
 
 console.log ":Running mode" (or process.env.env :dev)
 
 var getHtml $ \ (env)
-  var
-    assets $ getConfig env
+  var assets
+  case env
+    :dev
+      = assets $ {}
+        :main $ + :http://localhost :: 8080 :/main.js
+        :style null
+    :release
+      var assetsJson $ require :./dist/assets
+      = assets $ {}
+        :main assetsJson.main.js
+        :style null
 
   stir.render
     , stir.doctype
@@ -36,7 +32,7 @@ var getHtml $ \ (env)
         cond (? assets.style)
           link $ {} :rel :stylesheet :href assets.style
         script $ {} :src assets.main :defer true
-        div null ":body * {box-sizing: border-box;}"
+        style null ":body * {box-sizing: border-box;}"
       body ({} :style ":margin: 0;")
         div ({} :id :app)
 
@@ -47,3 +43,5 @@ if (is process.env.env :release)
     = env :release
 
 fs.writeFileSync (cond (is process.env.env :release) :dist/index.html :index.html) (getHtml env)
+
+console.log ":Write index.html"

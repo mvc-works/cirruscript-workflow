@@ -5,10 +5,11 @@
   "main": "main.js",
   "scripts": {
     "clean": "rm -rfv dist/*",
-    "watch": "webpack-dev-server --config webpack.dev.cirru",
-    "build": "webpack --config webpack.release.cirru",
+    "watch": "yarn html && webpack-dev-server --config webpack.dev.cirru",
+    "release": "webpack --config webpack.release.cirru && yarn release-html",
     "html": "cirru-script template.cirru",
     "release-html": "env=release cirru-script template.cirru",
+    "up": "yarn build && tiye-up",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jiyinyiyong",
@@ -22,19 +23,19 @@
     "cirru-script": "0.5.5",
     "cirru-script-loader": "0.5.4",
     "css-loader": "^3.4.0",
-    "del": "^1.2.1",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^5.0.2",
     "hsl": "^0.1.1",
     "http-server": "^0.12.0",
     "json-loader": "^0.5.3",
-    "run-sequence": "^1.1.2",
-    "stir-template": "^0.2.1",
+    "stir-template": "^0.2.2-a1",
     "style-loader": "^1.1.1",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.1",
+    "webpack-hud": "^0.1.2"
   },
   "dependencies": {},
   "repository": {
