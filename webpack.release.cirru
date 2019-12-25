@@ -13,7 +13,7 @@ var
       :main $ [] :./src/main
 
     :output $ {}
-      :path $ path.join __dirname :../dist/
+      :path $ path.join __dirname :dist/
       :filename :[name].[chunkhash:8].js
 
     :devtool :none

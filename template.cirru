@@ -1,4 +1,11 @@
 
+
+var env :dev
+
+if (is process.env.env :release)
+  do
+    = env :release
+
 var
   stir $ require :stir-template
   fs $ require :fs
@@ -9,21 +16,22 @@ var
 
 console.log ":Running mode" (or process.env.env :dev)
 
-var getHtml $ \ (env)
-  var assets
-  case env
-    :dev
-      = assets $ {}
-        :main $ + :http://localhost :: 8080 :/main.js
-        :style null
-    :release
-      var assetsJson $ require :./dist/assets
-      = assets $ {}
-        :main assetsJson.main.js
-        :style null
+var assets
+case env
+  :dev
+    = assets $ {}
+      :main $ + :http://localhost :: 8080 :/main.js
+      :style null
+  :release
+    var assetsJson $ require :./dist/assets
+    = assets $ {}
+      :main assetsJson.main.js
+      :style null
 
-  stir.render
-    , stir.doctype
+console.log ":Assets" assets
+
+var html
+  stir.render stir.doctype
     html null
       head null
         title null :Workflow
@@ -36,12 +44,6 @@ var getHtml $ \ (env)
       body ({} :style ":margin: 0;")
         div ({} :id :app)
 
-var env :dev
-
-if (is process.env.env :release)
-  do
-    = env :release
-
-fs.writeFileSync (cond (is process.env.env :release) :dist/index.html :index.html) (getHtml env)
+fs.writeFileSync (cond (is process.env.env :release) :dist/index.html :index.html) html
 
 console.log ":Write index.html"
