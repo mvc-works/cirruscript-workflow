@@ -7,9 +7,10 @@
     "clean": "rm -rfv dist/*",
     "watch": "yarn html && webpack-dev-server --config webpack.dev.cirru",
     "release": "yarn clean && webpack --config webpack.release.cirru && yarn release-html",
+    "release-local": "yarn clean && webpack --config webpack.release.cirru && local=true yarn release-html",
     "html": "cirru-script template.cirru",
     "release-html": "env=release cirru-script template.cirru",
-    "up": "yarn build && tiye-up",
+    "up": "yarn release && tiye-up",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jiyinyiyong",

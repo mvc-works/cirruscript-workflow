@@ -13,6 +13,7 @@ var
   ({}~ html head title meta link script body div style) stir
 
   logoUrl :http://logo.cirru.org/cirru-32x32.png
+  cdnUrl $ cond (is process.env.local :true) : :http://cdn.tiye.me/cirruscript-workflow/
 
 console.log ":Running mode" (or process.env.env :dev)
 
@@ -24,8 +25,11 @@ case env
       :style null
   :release
     var assetsJson $ require :./dist/assets
+
+    console.log ":Using CDN url:" (JSON.stringify cdnUrl)
+
     = assets $ {}
-      :main assetsJson.main.js
+      :main $ + cdnUrl assetsJson.main.js
       :style null
 
 console.log ":Assets" assets

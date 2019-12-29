@@ -1,5 +1,8 @@
 
-/build
+/dist
+/src
 /index.html
-/gulpfile.cirru
-/webpack.*
+webpack.*
+template.cirru
+upload.edn
+yarn.lock
