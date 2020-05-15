@@ -11,6 +11,7 @@
     "html": "cirruscript template.cirru",
     "release-html": "env=release cirruscript template.cirru",
     "up": "yarn release && tiye-up",
+    "compile": "cirruscript compile src lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jiyinyiyong",
