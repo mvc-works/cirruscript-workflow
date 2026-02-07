@@ -31,7 +31,7 @@
     "stir-template": "^0.2.2",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
-    "webpack": "^5.94.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^5.2.1",
     "webpack-hud": "^0.1.2"
